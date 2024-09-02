@@ -3,58 +3,59 @@ package union_find
 import "errors"
 
 type WeightedQuickUnion struct {
-	id     []int
-	weight []int
+	Id     []int
+	Weight []int
 }
 
 func (wqu *WeightedQuickUnion) Union(p, q int) error {
-	if p < 0 || p > len(wqu.id)-1 || q < 0 || q > len(wqu.id)-1 {
+	if p < 0 || p > len(wqu.Id)-1 || q < 0 || q > len(wqu.Id)-1 {
 		return errors.New("invalid params")
 	}
 
 	pr := wqu.root(p)
 	qr := wqu.root(q)
 
-	if wqu.weight[pr] <= wqu.weight[qr] {
-		wqu.id[pr] = wqu.id[qr]
-		wqu.weight[qr] += wqu.weight[pr]
+	if pr == qr {
+		return nil
+	}
+
+	if wqu.Weight[pr] <= wqu.Weight[qr] {
+		wqu.Id[pr] = wqu.Id[qr]
+		wqu.Weight[qr] += wqu.Weight[pr]
 	} else {
-		wqu.id[qr] = wqu.id[pr]
-		wqu.weight[pr] += wqu.weight[qr]
+		wqu.Id[qr] = wqu.Id[pr]
+		wqu.Weight[pr] += wqu.Weight[qr]
 	}
 
 	return nil
 }
 
 func (wqu *WeightedQuickUnion) Connected(p int, q int) (bool, error) {
-	if q < 0 || q > len(wqu.id)-1 || p < 0 || p > len(wqu.id)-1 {
+	if q < 0 || q > len(wqu.Id)-1 || p < 0 || p > len(wqu.Id)-1 {
 		return false, errors.New("invalid Params")
 	}
 
-	pr := wqu.root(p)
-	qr := wqu.root(q)
-
-	return pr == qr, nil
+	return wqu.root(p) == wqu.root(q), nil
 }
 
 func (wqu *WeightedQuickUnion) root(i int) int {
-	for i != wqu.id[i] {
+	for i != wqu.Id[i] {
 		// path compression
-		wqu.id[i] = wqu.id[wqu.id[i]]
-		i = wqu.id[i]
+		wqu.Id[i] = wqu.Id[wqu.Id[i]]
+		i = wqu.Id[i]
 	}
 	return i
 }
 
 func NewWeightedQuickUnion(n int) *WeightedQuickUnion {
 	wqu := &WeightedQuickUnion{
-		id:     make([]int, 10),
-		weight: make([]int, 10),
+		Id:     make([]int, 10),
+		Weight: make([]int, 10),
 	}
 
-	for i := 0; i < len(wqu.id); i++ {
-		wqu.id[i] = i
-		wqu.weight[i] = 1
+	for i := 0; i < len(wqu.Id); i++ {
+		wqu.Id[i] = i
+		wqu.Weight[i] = 1
 	}
 
 	return wqu

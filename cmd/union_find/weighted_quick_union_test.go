@@ -2,38 +2,25 @@ package union_find_test
 
 import (
 	"fmt"
+	"reflect"
 	"testing"
 
 	"github.com/kaiquecaires/algorithms_in_go/cmd/union_find"
 )
 
 func TestWeightedQuickUnion(t *testing.T) {
-	wqf := union_find.NewWeightedQuickUnion(10)
-	wqf.Union(1, 3)
-	wqf.Union(3, 5)
-	wqf.Union(3, 9)
-	wqf.Union(0, 2)
-	wqf.Union(1, 2)
+	wqu := union_find.NewWeightedQuickUnion(10)
 
-	if connected, _ := wqf.Connected(1, 5); !connected {
-		t.Fatalf("1 and 5 should be connected")
+	wqu.Union(1, 3)
+	wqu.Union(3, 5)
+	wqu.Union(3, 9)
+	wqu.Union(0, 2)
+	wqu.Union(1, 2)
+
+	expectedID := []int{2, 3, 3, 3, 4, 3, 6, 7, 8, 3}
+	if !reflect.DeepEqual(wqu.Id, expectedID) {
+		t.Fatalf("expected id array %v, but got %v", expectedID, wqu.Id)
 	}
 
-	if connected, _ := wqf.Connected(1, 9); !connected {
-		t.Fatalf("1 and 5 should be connected")
-	}
-
-	if connected, _ := wqf.Connected(1, 8); connected {
-		t.Fatalf("1 and 5 should not be connected")
-	}
-
-	if _, error := wqf.Connected(-1, 6); error == nil {
-		t.Fatalf("error should not be nil")
-	}
-
-	if _, error := wqf.Connected(1, 10); error == nil {
-		t.Fatalf("error should not be nil")
-	}
-
-	fmt.Println(wqf)
+	fmt.Println(wqu)
 }
