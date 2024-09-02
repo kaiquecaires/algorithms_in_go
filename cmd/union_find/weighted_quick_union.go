@@ -39,6 +39,8 @@ func (wqu *WeightedQuickUnion) Connected(p int, q int) (bool, error) {
 
 func (wqu *WeightedQuickUnion) root(i int) int {
 	for i != wqu.id[i] {
+		// path compression
+		wqu.id[i] = wqu.id[wqu.id[i]]
 		i = wqu.id[i]
 	}
 	return i
