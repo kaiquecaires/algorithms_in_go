@@ -1,4 +1,4 @@
-package algoexpert
+package sortedsquaredarray
 
 import "math"
 

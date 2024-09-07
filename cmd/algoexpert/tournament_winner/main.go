@@ -1,4 +1,4 @@
-package algoexpert
+package tournamentwinner
 
 const HOME_TEAM_WON = 1
 

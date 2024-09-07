@@ -1,4 +1,4 @@
-package algoexpert
+package findclosestvalue
 
 import (
 	"math"

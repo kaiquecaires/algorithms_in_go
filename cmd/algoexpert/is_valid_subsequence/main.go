@@ -1,4 +1,4 @@
-package algoexpert
+package isvalidsubsequence
 
 func IsValidSubsequence(array []int, sequence []int) bool {
 	sequenceIdx := 0

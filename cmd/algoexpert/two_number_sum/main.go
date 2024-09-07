@@ -1,4 +1,4 @@
-package algoexpert
+package twonumbersum
 
 func TwoNumberSum(array []int, target int) []int {
 	expectedNumbers := map[int]int{}
